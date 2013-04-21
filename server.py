@@ -10,6 +10,7 @@ from flask import Flask
 from flask import request
 from pygoogle import pygoogle
 from utils import htmlparser
+from flask import Response
 app = Flask(__name__)
 
 
@@ -29,7 +30,7 @@ def search():
             if result['content'] != "":
                 results.append(result)
 
-    return json.dumps(results)  # return encoded json with {title: , content: , url: , rank: }
+    return Response(json.dumps(results), mimetype='application/json')  # return encoded json with {title: , content: , url: , rank: }
 
 if __name__ == '__main__':
     app.debug = True
