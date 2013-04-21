@@ -24,19 +24,11 @@
         <h1></h1>
         <h1></h1>
         <div>
-            <form class="search-form">
-                <input type="text" class="span6">
+            <form class="search-form" action="/search" method="GET">
+                <input type="text" class="span6" name="query">
+                <button type="submit">Submit</button>
             </form>
         </div>
     </div>
     
-    <script type="text/javascript" src="http://jquery.com/download/"></script>
-    <script type="text/javascript">
-        $(function() {
-            $('#search-box').submit(function(e) {
-                e.preventDefault();
-                
-            });    
-        });
-    </script>
 </body>
