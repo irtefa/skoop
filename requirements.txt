@@ -1,0 +1,2 @@
+pygoogle==0.6
+wsgiref==0.1.2
