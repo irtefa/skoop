@@ -9,7 +9,7 @@ import json
 from flask import Flask
 from flask import request
 from pygoogle import pygoogle
-
+from utils import htmlparser
 app = Flask(__name__)
 
 
@@ -25,7 +25,9 @@ def search():
             result['title'] = url['title']
             result['url'] = url['url']
             result['rank'] = index
-            results.append(result)
+            result['content'] = htmlparser.strip_tags(url['url'])
+            if result['content'] != "":
+                results.append(result)
 
     return json.dumps(results)  # return encoded json with {title: , content: , url: , rank: }
 
