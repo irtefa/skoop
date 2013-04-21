@@ -1,8 +1,4 @@
-###
-#  Change this to
-#   from BeatifulSoup import BeautifulSoup
-#  if you pip-installed bs
-###
+#from bs4 import BeautifulSoup
 from BeautifulSoup import BeautifulSoup
 
 import urllib2
