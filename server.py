@@ -39,7 +39,7 @@ def search():
                 score = scorer.score_document(result['title'], result['content'], index)
                 result['score'] = score
                 results.append(result)
-    return Response(json.dumps(results), mimetype='application/json')  # return encoded json with {title: , content: , url: , rank: }
+    return Response(json.dumps(results), mimetype='application/json')  # return encoded json with {title: , content: , url: , score:, rank: }
 
 if __name__ == '__main__':
     app.debug = True
