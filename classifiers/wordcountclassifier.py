@@ -14,7 +14,7 @@ class WordCountClassifier(Classifier):
 
     # scores the document based on word count
     def score_document(self, title, content, rank):
-        words = content.split()
+        words = content.lower().split()
         punc = set(string.punctuation)
         words = [''.join(ch for ch in word if ch not in punc) for word in words]
         count = words.count(self.keyword)

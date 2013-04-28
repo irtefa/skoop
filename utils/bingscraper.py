@@ -9,6 +9,7 @@ def get_urls(q, pages):
     query = q
     pageStart = pages  # The number of the result to start at
     url = "http://www.bing.com/search?q={0}&first={1}".format(query, pageStart)
+    print url
     page = urllib2.urlopen(url)
 
     ## Parse results

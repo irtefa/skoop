@@ -12,6 +12,8 @@ from utils import bingscraper
 from utils import htmlparser
 from flask import Response
 from flask import render_template
+from classifiers.phraseclassifier import PhraseClassifier
+
 app = Flask(__name__)
 
 
@@ -22,7 +24,8 @@ def index():
 
 @app.route('/search')
 def search():
-    query = request.args.get('query')
+    q = request.args.get('query')
+    query = '+'.join(q.split())
     urls = bingscraper.get_urls(query, 1)
     results = []
     for index, url in enumerate(urls):
@@ -32,8 +35,10 @@ def search():
             result['rank'] = index
             result['content'] = htmlparser.strip_tags(url['url'])
             if result['content'] != "":
+                scorer = PhraseClassifier(q)
+                score = scorer.score_document(result['title'], result['content'], index)
+                result['score'] = score
                 results.append(result)
-
     return Response(json.dumps(results), mimetype='application/json')  # return encoded json with {title: , content: , url: , rank: }
 
 if __name__ == '__main__':
