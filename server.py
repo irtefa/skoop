@@ -11,7 +11,13 @@ from flask import request
 from utils import bingscraper
 from utils import htmlparser
 from flask import Response
+from flask import render_template
 app = Flask(__name__)
+
+
+@app.route('/')
+def index():
+    return render_template('index.html')
 
 
 @app.route('/search')
