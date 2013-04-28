@@ -7,8 +7,8 @@ $('.search-bar').keypress(function (e) {
             type: 'GET',
             contentType: 'application/json',
             dataType: 'json',
-            success: function(data) {
-                console.log(data);
+            success: function(results) {
+                console.log(results);
             }
         });
   }
