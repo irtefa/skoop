@@ -7,8 +7,6 @@ var populateVizData = function(results) {
   var ranks = _.pluck(results, "rank");
   var scores = _.pluck(results, "score");
 
-  // Clear the existing visualization
-  $("#scatterplot").empty();
 
   var r = Raphael(document.getElementById("scatterplot"), 700, 640);
 
@@ -51,11 +49,19 @@ $('.search-bar').keypress(function (e) {
   // Get data from server, then make a visualization with it
   e.preventDefault();
   query = $('.search-bar').val();
+  
+  // Clear the existing visualization, create a spinner
+  $("#scatterplot").empty();
+  var remove = spinner("scatterplot", 70, 120, 12, 25, "#000");
+
   $.ajax({
       url: '/search?query=' + query,
       type: 'GET',
       contentType: 'application/json',
       dataType: 'json',
-      success: populateVizData
+      success: function(e) {
+        remove();
+        populateVizData(e);
+      }
   });
 });
