@@ -43,7 +43,9 @@ def dehtml(text):
 
 def strip_tags(url):
     try:
-        html = urlopen(url).read()
+        urlobj = urlopen(url)
+        #print urlobj.info()
+        html = unicode(urlobj.read(), "utf-8")
         return(dehtml(html))
     except:
         return ""
