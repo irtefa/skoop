@@ -24,9 +24,9 @@ var populateVizData = function(results) {
     symbol.attr("title", results[i].title);
     symbol.attr("href", results[i].url);
     symbol.hover(function(e){
-      var title = this.attrs.title.title;
+      var title = this.attrs.title;
       text.attr({
-          text: "title: " + title
+          text: title
       });
     }, function() {
       text.attr({
@@ -54,10 +54,11 @@ $('.search-bar').keypress(function (e) {
   // Clear the existing visualization, create a spinner
   $("#scatterplot").empty();
   var removeSpinner = spinner("scatterplot", 70, 120, 12, 25, "#000");
+  console.log($('.search-form').serialize());
   $.ajax({
       type: 'POST',
       url: '/search',
-      data: {query: query},
+      data: $('.search-form').serialize(),
       success: function(e) {
         removeSpinner();
         populateVizData(e);

@@ -8,8 +8,9 @@ from wordcountclassifier import WordCountClassifier as WordRank
 
 class PhraseClassifier(Classifier):
 
-    # constructs a phrase classifier by taking a phrase as an input and turning it into an list
-    def __init__(self, phrase):
+    # constructs a phrase classifier by taking a dict containing 'phrase' as a key
+    def __init__(self, options):
+        phrase = options['phrase']
         self.phrase = phrase.split()
 
     # take each word in phrase and score the documents
