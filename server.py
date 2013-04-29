@@ -22,9 +22,10 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/search')
+@app.route('/search', methods=['POST'])
 def search():
-    q = request.args.get('query')
+    #q = request.args.get('query')
+    q = request.form['query']
     query = '+'.join(q.split())
     urls = bingscraper.get_urls(query, 1)
     results = []

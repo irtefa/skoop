@@ -40,28 +40,30 @@ var populateVizData = function(results) {
 
 
 $('.search-bar').keypress(function (e) {
-
   // Only react to 'Enter'
   if (e.which != 13) {
     return;
   }
+  
+  $('.search-title').css('margin-top', '0px');
 
   // Get data from server, then make a visualization with it
   e.preventDefault();
   query = $('.search-bar').val();
-  
+
   // Clear the existing visualization, create a spinner
   $("#scatterplot").empty();
-  var remove = spinner("scatterplot", 70, 120, 12, 25, "#000");
-
+  var removeSpinner = spinner("scatterplot", 70, 120, 12, 25, "#000");
   $.ajax({
-      url: '/search?query=' + query,
-      type: 'GET',
-      contentType: 'application/json',
-      dataType: 'json',
+      type: 'POST',
+      url: '/search',
+      data: {query: query},
       success: function(e) {
-        remove();
+        removeSpinner();
         populateVizData(e);
       }
   });
 });
+
+
+
