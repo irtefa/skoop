@@ -32,7 +32,12 @@ def index():
 
 @app.route('/search', methods=['POST'])
 def search():
-  # TODO clean this up, this shouldn't be in the server code
+
+    print "FORM", request.form, request.form.getlist('classifier')
+
+
+
+    # TODO clean this up, this shouldn't be in the server code
     query = request.form['query']
     print "QUERY", query
     bingQuery = '+'.join(query.split())
@@ -43,8 +48,9 @@ def search():
             result['title'] = url['title']
             result['url'] = url['url']
             result['rank'] = index
-            result['content'] = htmlparser.strip_tags(url['url'])
-            if result['content'] != "":
+            content = htmlparser.strip_tags(url['url'])
+
+            if content != "":
                 scorer = PhraseClassifier(query)
 
                 # Classifiers are now given the entire 'request.form' object, which is just 
@@ -54,16 +60,20 @@ def search():
                 # For now, they're just the query itself
                 # This also doesn't support using multiple classifiers yet, but it's a start
                 # TO do that, we'll probably have to give a list of indices
+                # Martin: I'll try to finish this part up early this week
                 request.form['phrase'] = query #TODO temporary hack
                 request.form['keyword'] = (query.split())[0] #TODO temporary hack
-                # Get the correct classifier based on the one we picked on the page
-                classifier_index = int(request.form['classifier'])
-                scorer = classifiers[classifier_index][2](request.form)
 
+                # Get the classifiers selected by user, and instantiate
+                classifier_indices = map(int, request.form.getlist('classifier'))
+                classifier_index = classifier_indices[0] # only take 1 classifier for now, TODO
+                scorer = classifiers[classifier_index][2](request.form) #instantiate the classifier
 
-                score = scorer.score_document(result['title'], result['content'], index)
+                score = scorer.score_document(result['title'], content, index)
                 result['score'] = score
                 results.append(result)
+                
+
     # return encoded json with {title: , content: , url: , score:, rank: }
     return Response(json.dumps(results), mimetype='application/json')  
 

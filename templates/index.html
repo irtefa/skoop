@@ -22,7 +22,7 @@
             <h1 class="search-title" style="text-align:center">skoop</h1>
             <form class="search-form" action="">
                 <input type="text" class="search-bar" name="query">
-                <select id="classifier-select" name="classifier">
+                <select id="classifier-select" name="classifier" multiple>
                   {% for (index,cname, classifier) in classifiers %}
                   <option value="{{ index }}">{{ cname }}</option>
                   {% endfor %}
