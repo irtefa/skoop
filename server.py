@@ -50,18 +50,6 @@ def search():
 
             if content != "":
                 scorer = PhraseClassifier(request.form)
-
-                # Classifiers are now given the entire 'request.form' object, which is just
-                # all the form fields from the search page, in a dict. They can then extract
-                # whatever user input they need to do their job
-                # Eventually, we will get these from special forms on the page
-                # For now, they're just the query itself
-                # This also doesn't support using multiple classifiers yet, but it's a start
-                # TO do that, we'll probably have to give a list of indices
-                # Martin: I'll try to finish this part up early this week
-                #request.form['phrase'] = query   # TODO temporary hack
-                #request.form['keyword'] = (query.split())[0]   # TODO temporary hack
-
                 # Get the classifiers selected by user, and instantiate
                 classifier_indices = map(int, request.form.getlist('classifier'))
                 classifier_index = classifier_indices[0]  # only take 1 classifier for now, TODO
