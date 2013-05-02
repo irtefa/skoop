@@ -12,3 +12,8 @@ class Classifier:
     @abstractmethod
     def score_document(self, title, content, rank):
         print "you must implement this function"
+
+
+    @abstractmethod
+    def get_labels(self):
+        print "return the axis, low, high labels"

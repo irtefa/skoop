@@ -32,34 +32,40 @@ def index():
 
 @app.route('/search', methods=['POST'])
 def search():
-
-    print "FORM", request.form, request.form.getlist('classifier')
-
     # TODO clean this up, this shouldn't be in the server code
+    print "FORM", request.form, request.form.getlist('classifier')
     query = request.form['query']
     print "QUERY", query
     bingQuery = '+'.join(query.split())
     urls = bingscraper.get_urls(bingQuery, NUM_PAGES)
-    results = []
+    documents = []
     rank = 0
+    
+    # Get the classifiers selected by user, and instantiate
+    instance_from_index = lambda i: classifiers[int(i)][2](request.form)
+    scorers = map(instance_from_index, request.form.getlist('classifier'))
+
+    ##
+    ## Check API_INFO.txt for description server/client json response format
+    ##
     for url in urls:
-            result = {}
-            result['title'] = url['title']
-            result['url'] = url['url']
-            result['rank'] = rank
-            content = htmlparser.strip_tags(url['url'])
+        result = {}
+        result['title'] = url['title']
+        result['url'] = url['url']
+        result['rank'] = rank
+        content = htmlparser.strip_tags(url['url'])
 
-            if content != "":
-                scorer = PhraseClassifier(request.form)
-                # Get the classifiers selected by user, and instantiate
-                classifier_indices = map(int, request.form.getlist('classifier'))
-                classifier_index = classifier_indices[0]  # only take 1 classifier for now, TODO
-                scorer = classifiers[classifier_index][2](request.form)  # instantiate the classifier
+        if content != "":
+            score_document = lambda c: c.score_document(result['title'], content, rank)
+            scores = map(score_document, scorers)
+            result['scores'] = scores
+            documents.append(result)
+            rank += 1
+    
+    # [ [axis,low,high], ...]
+    clabels = map(lambda c: c.get_labels(), scorers)
 
-                score = scorer.score_document(result['title'], content, rank)
-                result['score'] = score
-                results.append(result)
-                rank += 1
+    results = {'documents': documents, 'classifiers': clabels}
 
     # return encoded json with {title: , content: , url: , score:, rank: }
     return Response(json.dumps(results), mimetype='application/json')

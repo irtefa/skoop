@@ -1,0 +1,20 @@
+
+Here's what the server returns:
+
+
+{'documents': [...documents...], 'classifiers': [...classifiers...]}
+
+where documents are a list of doc objects:
+  Example Doc: {rank:0, scores: [.5, .2, .1], title:"test", url:"www.test.com"}
+
+and classifiers is a list of lists of data about each classifier
+  ["Axis Label", "Low Label", "High Label"]
+
+
+The classifier labels appear in the same order as the scores in each doc
+  
+
+
+
+
+

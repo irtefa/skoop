@@ -3,9 +3,12 @@
 var populateVizData = function(results) {
   console.log(results);
 
+  var documents = results.documents;
+
   // Get attributes from results list
-  var ranks = _.pluck(results, "rank");
-  var scores = _.pluck(results, "score");
+  var ranks = _.pluck(documents, "rank");
+  // Temporarily return just the first score for each doc
+  var scores = _.map(documents, function(d) {return d.scores[0];}); 
 
 
   var r = Raphael(document.getElementById("scatterplot"), 700, 500);
@@ -21,8 +24,8 @@ var populateVizData = function(results) {
   var text = r.text(260,460,"");
 
   var setupChartSymbol = function(symbol, i) {
-    symbol.attr("title", results[i].title);
-    symbol.attr("href", results[i].url);
+    symbol.attr("title", documents[i].title);
+    symbol.attr("href", documents[i].url);
     symbol.hover(function(e){
       var title = this.attrs.title;
       text.attr({

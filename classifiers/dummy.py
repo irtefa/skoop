@@ -14,3 +14,6 @@ class DummyClassifier(Classifier):
 
     def score_document(self, title, content, rank):
       return 0.33
+
+    def get_labels(self):
+      return ["Dummy Score","Low","High"]

@@ -20,3 +20,9 @@ class WordCountClassifier(Classifier):
         words = [''.join(ch for ch in word if ch not in punc) for word in words]
         count = words.count(self.keyword)
         return float(count)/float(len(words))
+
+
+    def get_labels(self):
+      word = '"' + self.keyword + '"'
+      return ["Proportion of word "+word,"Low","High"]
+
