@@ -22,7 +22,6 @@ class PhraseClassifier(Classifier):
             scores *= score
         return scores
 
-
     def get_labels(self):
-      phrase = '"' + " ".join(self.phrase) + '"'
-      return ["Similarity to phrase "+phrase,"Low","High"]
+        phrase = '"' + " " . join(self.phrase) + '"'
+        return ["Similarity to phrase " + phrase, "Low", "High"]
