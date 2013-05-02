@@ -19,9 +19,9 @@ NUM_PAGES = 10
 # These are all the classifiers that the client can choose from
 classifiers = [
     #(index, name to display to client, classifier class)
-    (0, "Phrase Count", phraseclassifier.PhraseClassifier, '<input name="keyword-phrase"></input>'),
-    (1, "Word Count", wordcountclassifier.WordCountClassifier, '<input name="keyword-word"></input>'),
-    (2, "Dummy", dummy.DummyClassifier, '<input name="keyword-dummy"></input>'),
+    (0, "Phrase Count", phraseclassifier.PhraseClassifier, '<input type="text" name="keyword-phrase" placeholder="Enter you phrase constraint here...">'),
+    (1, "Word Count", wordcountclassifier.WordCountClassifier, '<input type="text" name="keyword-word" placeholder="Enter you word constraint here...">'),
+    (2, "Dummy", dummy.DummyClassifier, '<input type="text" name="keyword-dummy" placeholder="Dummy...">'),
 ]
 
 

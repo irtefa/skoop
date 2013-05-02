@@ -16,9 +16,9 @@ var populateVizData = function(results) {
     var scores = _.map(documents, function(d) {return d.scores[0];});
 
 
-    var r = Raphael(document.getElementById("scatterplot"), 700, 500);
+    var r = Raphael(document.getElementById("scatterplot"), 700, 450);
 
-    var chart = r.linechart(0, 0, 600, 450, ranks, [scores], {
+    var chart = r.linechart(0, 0, 600, 430, ranks, [scores], {
         colors: ['#F00', '#0F0', '#FF0'],
         symbol: 'circle',
         axis: '0 1 1 0',
@@ -26,7 +26,7 @@ var populateVizData = function(results) {
         nostroke: true
     });
 
-    var text = r.text(260,460,"");
+    var text = r.text(260,440,"");
 
     var setupChartSymbol = function(symbol, i) {
         symbol.attr("title", documents[i].title);
@@ -47,7 +47,7 @@ var populateVizData = function(results) {
 };
 
 
-$('.search-bar').keypress(function (e) {
+$('input').keypress(function (e) {
     // Only react to 'Enter'
     if (e.which != 13) {
         return;
