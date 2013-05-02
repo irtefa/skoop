@@ -10,7 +10,7 @@ class WordCountClassifier(Classifier):
 
     # constructs a word count classifier based a given input word
     def __init__(self, options):
-        keyword = options['keyword']
+        keyword = options['keyword-word']
         self.keyword = keyword
 
     # scores the document based on word count

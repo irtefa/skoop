@@ -1,7 +1,12 @@
 .search-title {
   margin-top: 200px;
   font-family: 'Quicksand', sans-serif;
-  font-weight: 700; 
+  font-weight: 700;
+  -ms-transition: all 1s ease-in-out;
+    -webkit-transition: all 1s ease-in-out; 
+    -moz-transition: all 1s ease-in-out;
+    -o-transition: all 1s ease-in-out;
+    transition: all 1s ease-in-out;
 }
 
 input[type="text"]

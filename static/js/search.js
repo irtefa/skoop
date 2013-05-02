@@ -8,9 +8,9 @@ var populateVizData = function(results) {
   var scores = _.pluck(results, "score");
 
 
-  var r = Raphael(document.getElementById("scatterplot"), 700, 640);
+  var r = Raphael(document.getElementById("scatterplot"), 700, 500);
 
-  var chart = r.linechart(0, 0, 600, 500, ranks, [scores], {
+  var chart = r.linechart(0, 0, 600, 450, ranks, [scores], {
       colors: ['#F00', '#0F0', '#FF0'],
       symbol: 'circle',
       axis: '0 1 1 0',
@@ -18,7 +18,7 @@ var populateVizData = function(results) {
       nostroke: true
   });
 
-  var text = r.text(260,510,"");
+  var text = r.text(260,460,"");
 
   var setupChartSymbol = function(symbol, i) {
     symbol.attr("title", results[i].title);
@@ -44,8 +44,8 @@ $('.search-bar').keypress(function (e) {
   if (e.which != 13) {
     return;
   }
-  
-  $('.search-title').css('margin-top', '0px');
+
+  $('.search-title').css('margin-top', '10px');
 
   // Get data from server, then make a visualization with it
   e.preventDefault();
@@ -53,7 +53,7 @@ $('.search-bar').keypress(function (e) {
 
   // Clear the existing visualization, create a spinner
   $("#scatterplot").empty();
-  var removeSpinner = spinner("scatterplot", 70, 120, 12, 25, "#000");
+  var removeSpinner = spinner("scatterplot", 70/2, 120/2, 12, 25/2, "#000");
   console.log($('.search-form').serialize());
   $.ajax({
       type: 'POST',
@@ -63,6 +63,16 @@ $('.search-bar').keypress(function (e) {
         removeSpinner();
         populateVizData(e);
       }
+  });
+});
+
+$(".class-form").hide();
+
+$("#classifier-select").change(function(e){
+  selected_classifs = $(this).val();console.log(selected_classifs);
+  $(".class-form").hide();
+  _.each(selected_classifs, function(index){
+    $("#" + index).show();
   });
 });
 

@@ -23,13 +23,18 @@
             <form class="search-form" action="">
                 <input type="text" class="search-bar" name="query">
                 <select id="classifier-select" name="classifier" multiple>
-                  {% for (index,cname, classifier) in classifiers %}
+                  {% for (index,cname, classifier, form) in classifiers %}
                   <option value="{{ index }}">{{ cname }}</option>
                   {% endfor %}
                 </select>
+                {% for (index,cname, classifier, form) in classifiers %}
+                    <div class="class-form" id="{{index}}">
+                    {{ form|safe }}
+                    </div>
+                {% endfor %}
             </form>
+            <div id="scatterplot" style="text-align:center"></div>
         </div>
-        <div id="scatterplot"></div>
     </div>
     <script src="static/js/spinner.js" type="text/javascript"></script>
     <script src="static/js/search.js" type="text/javascript"></script>

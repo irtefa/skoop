@@ -19,10 +19,10 @@ app = Flask(__name__)
 # These are all the classifiers that the client can choose from
 classifiers = [
     #(index, name to display to client, classifier class)
-    (0, "Phrase Count", phraseclassifier.PhraseClassifier),
-    (1, "Word Count", wordcountclassifier.WordCountClassifier),
-    (2, "Dummy", dummy.DummyClassifier),
-     ]
+    (0, "Phrase Count", phraseclassifier.PhraseClassifier, '<input name="keyword-phrase"></input>'),
+    (1, "Word Count", wordcountclassifier.WordCountClassifier, '<input name="keyword-word"></input>'),
+    (2, "Dummy", dummy.DummyClassifier, '<input name="keyword-dummy"></input>'),
+]
 
 
 @app.route('/')
@@ -49,7 +49,7 @@ def search():
             content = htmlparser.strip_tags(url['url'])
 
             if content != "":
-                scorer = PhraseClassifier(query)
+                scorer = PhraseClassifier(request.form)
 
                 # Classifiers are now given the entire 'request.form' object, which is just
                 # all the form fields from the search page, in a dict. They can then extract
@@ -59,8 +59,8 @@ def search():
                 # This also doesn't support using multiple classifiers yet, but it's a start
                 # TO do that, we'll probably have to give a list of indices
                 # Martin: I'll try to finish this part up early this week
-                request.form['phrase'] = query   # TODO temporary hack
-                request.form['keyword'] = (query.split())[0]   # TODO temporary hack
+                #request.form['phrase'] = query   # TODO temporary hack
+                #request.form['keyword'] = (query.split())[0]   # TODO temporary hack
 
                 # Get the classifiers selected by user, and instantiate
                 classifier_indices = map(int, request.form.getlist('classifier'))
