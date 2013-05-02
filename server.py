@@ -14,8 +14,8 @@ from classifiers import *
 from classifiers.phraseclassifier import PhraseClassifier
 
 app = Flask(__name__)
+NUM_PAGES = 10
 
-# TODO figure out a better way to do this
 # These are all the classifiers that the client can choose from
 classifiers = [
     #(index, name to display to client, classifier class)
@@ -39,13 +39,14 @@ def search():
     query = request.form['query']
     print "QUERY", query
     bingQuery = '+'.join(query.split())
-    urls = bingscraper.get_urls(bingQuery, 1)
+    urls = bingscraper.get_urls(bingQuery, NUM_PAGES)
     results = []
-    for index, url in enumerate(urls):
+    rank = 0
+    for url in urls:
             result = {}
             result['title'] = url['title']
             result['url'] = url['url']
-            result['rank'] = index
+            result['rank'] = rank
             content = htmlparser.strip_tags(url['url'])
 
             if content != "":
@@ -55,9 +56,10 @@ def search():
                 classifier_index = classifier_indices[0]  # only take 1 classifier for now, TODO
                 scorer = classifiers[classifier_index][2](request.form)  # instantiate the classifier
 
-                score = scorer.score_document(result['title'], content, index)
+                score = scorer.score_document(result['title'], content, rank)
                 result['score'] = score
                 results.append(result)
+                rank += 1
 
     # return encoded json with {title: , content: , url: , score:, rank: }
     return Response(json.dumps(results), mimetype='application/json')
