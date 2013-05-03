@@ -6,8 +6,6 @@
  */
 function scatterplot(){
     this.populateVizData = function(results) {
-        console.log(results);
-
         var documents = results.documents;
 
         // Get attributes from results list
@@ -17,18 +15,19 @@ function scatterplot(){
 
         var dimensions = documents[0].scores.length;
 
-        var r = Raphael(document.getElementById("vis"), 700, 450);
+        var r = Raphael(document.getElementById("vis"), 700, 480);
 
         var chart = r.linechart(0, 0, 600, 430, ranks, [scores], {
             colors: ['#F00', '#0F0', '#FF0'],
             symbol: 'circle',
             axis: '0 1 1 0',
             axisxstep: 1,
+            axisystep: 1,
             nostroke: true
         });
 
-        var text = r.text(260,440,"");
-        text.attr("font-size", 15);
+        var text = r.text(260,460,"");
+        text.attr("font-size", 13);
 
         var setupChartSymbol = function(symbol, i) {
             symbol.attr("title", documents[i].title);
@@ -52,5 +51,24 @@ function scatterplot(){
         };
 
         _.each(chart.symbols[0], setupChartSymbol);
+
+        // now create the axis labels
+        var x_axis = "Rank";
+        var y_axis = results.classifiers[0][0];
+        var y_axis_low = results.classifiers[0][1];
+        var y_axis_high = results.classifiers[0][2];
+        var x_axis_label = r.text(285, 440, x_axis);
+        x_axis_label.attr("font-size", 15);
+        var y_axis_label = r.text(620,210, y_axis);
+        y_axis_label.attr("font-size", 15);
+        y_axis_label.rotate(90);
+        var y_axis_low_label = r.text(620,410, y_axis_low);
+        y_axis_low_label.attr("font-size", 14);
+        var y_axis_high_label = r.text(620, 25, y_axis_high);
+        y_axis_high_label.attr("font-size", 14);
+        var z_label;
+        if (dimensions > 1){
+            z_label = r.text(280, 475, "Radius is " + results.classifiers[1][0]);
+        }
     };
 }
