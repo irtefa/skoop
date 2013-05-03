@@ -40,7 +40,7 @@ def search():
     urls = bingscraper.get_urls(bingQuery, NUM_PAGES)
     documents = []
     rank = 0
-    
+
     # Get the classifiers selected by user, and instantiate
     instance_from_index = lambda i: classifiers[int(i)][2](request.form)
     scorers = map(instance_from_index, request.form.getlist('classifier'))
@@ -61,7 +61,7 @@ def search():
             result['scores'] = scores
             documents.append(result)
             rank += 1
-    
+
     # [ [axis,low,high], ...]
     clabels = map(lambda c: c.get_labels(), scorers)
 
