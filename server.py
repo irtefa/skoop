@@ -21,7 +21,7 @@ classifiers = [
     (0, "Phrase Count", phraseclassifier.PhraseClassifier, '<input type="text" name="keyword-phrase" placeholder="Enter you phrase constraint here...">'),
     (1, "Word Count", wordcountclassifier.WordCountClassifier, '<input type="text" name="keyword-word" placeholder="Enter you word constraint here...">'),
     (2, "Dummy", dummy.DummyClassifier, '<input type="text" name="keyword-dummy" placeholder="Dummy...">'),
-    (3, "Sentiment", sentimentclassifier.SentimentClassifier, '<input type="text" name="keyword-sentiment" placeholder="">'),
+    (3, "Sentiment", sentimentclassifier.SentimentClassifier, ''),
 ]
 
 

@@ -10,8 +10,7 @@ from classifier import Classifier
 class SentimentClassifier(Classifier):
 
     def __init__(self, options):
-        keyword = options['keyword-sentiment']
-        self.keyword = keyword
+        pass
 
     def score_document(self, title, content, rank):
         # by default every word has a word count of 0
