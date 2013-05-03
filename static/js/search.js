@@ -57,14 +57,6 @@ $('input').keypress(function (e) {
     if ($("#classifier-select").val() === null){
         return;
     }
-    // make sure the bars have something in them
-    var exit = false;
-    _.each($("#classifier-select").val(), function(id){
-        if ($("#" + id).children()[0].value === ''){
-            exit = true;
-        }
-    });
-    if (exit) {return;}
 
     $('.search-title').css('margin-top', '10px');
 
