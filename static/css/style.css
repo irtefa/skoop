@@ -21,7 +21,7 @@ input[type="text"]
     -moz-appearance: none;
     
     height: 30px;
-    width: 100%;
+    width: 71%;
     background-color: transparent; 
     border: 2px solid #cdc9c9;
     font: normal 20px 'trebuchet MS', arial, helvetica; 
@@ -31,4 +31,34 @@ input[type="text"]:focus
 {
     border: 2px solid #0099CC;
     outline: none;
+}
+
+#classifier-select{
+    height: 46px;
+    width: 25%;
+    border: 2px solid #cdc9c9;
+    font: normal 13px 'trebuchet MS', arial, helvetica; 
+}
+
+#classifier-select:focus
+{
+    border: 2px solid #0099CC;
+}
+
+.search-form input, .search-form select{
+    display: block;
+    float: left;
+}
+
+svg{
+    display: block;
+    margin: 0 auto;
+}
+
+#vis-select{
+    background-color: transparent;
+    display: block;
+    float: left;
+    width: 25%;
+    font: normal 17px 'trebuchet MS', arial, helvetica; 
 }
