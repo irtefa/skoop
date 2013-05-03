@@ -2,8 +2,10 @@
 Sentiment classifier -- scores a doc based on Sentiment
 """
 
-import pickle
-import collections
+import json
+import re
+import urllib
+import urllib2
 from classifier import Classifier
 
 
@@ -13,17 +15,20 @@ class SentimentClassifier(Classifier):
         pass
 
     def score_document(self, title, content, rank):
-        # by default every word has a word count of 0
-        word_dict = collections.defaultdict(lambda: 0)
-        words = content.lower().split()
-        # increment word count as you see that word
-        for word in words:
-            word_dict[word] += 1
+        # pick only valid words and make it a long space separated string
+        words = u' '.join(re.findall('[a-z]+', content.lower()))
         # load our classifier
-        classifier = pickle.load(open('static/resources/classifier.bin'))
-
-        sentiment_sum = classifier.classify(word_dict)
-        return float(sentiment_sum) / 5
+        url = 'http://text-processing.com/api/sentiment/'
+        vals = {'text': words}
+        data = urllib.urlencode(vals)
+        request = urllib2.Request(url, data)
+        try:
+            response = urllib2.urlopen(request)
+            result = json.loads(response.read())
+            probability = float(result['probability']['pos'])
+            return probability
+        except:
+            return 0.5
 
     def get_labels(self):
         return ["Sentiment of documents", "Sad", "Happy"]
