@@ -6,6 +6,7 @@
  */
 function scatterplot(){
     this.populateVizData = function(results) {
+        console.log(results);
         var documents = results.documents;
 
         // Get attributes from results list
@@ -13,7 +14,13 @@ function scatterplot(){
         // Temporarily return just the first score for each doc
         var scores = _.map(documents, function(d) {return d.scores[0];});
 
-        var dimensions = documents[0].scores.length;
+        var dimensions = results.classifiers.length;
+
+        var max_score = 0;
+        if (dimensions > 1){
+            max_score = _.max(_.map(documents, function(d) {return d.scores[1];}));
+        }
+        var radius_scale = 15/max_score;
 
         var r = Raphael(document.getElementById("vis"), 700, 480);
 
@@ -26,18 +33,19 @@ function scatterplot(){
             nostroke: true
         });
 
-        var text = r.text(260,460,"");
+        var text = r.text(460,460,"");
         text.attr("font-size", 13);
 
         var setupChartSymbol = function(symbol, i) {
             symbol.attr("title", documents[i].title);
             symbol.attr("href", documents[i].url);
-            var rad = 20;
+            var rad = 7;
             // set the visualization of radius size for the second dimensuib
             if (dimensions > 1){
-                rad =  20 * documents[i].scores[1];
+                rad =  3 + radius_scale * documents[i].scores[1];
             }
-            //symbol.attr("r", rad);
+            console.log(rad);
+            symbol.attr("r", rad);
             symbol.hover(function(e){
                 var title = this.attrs.title;
                 text.attr({
@@ -68,7 +76,8 @@ function scatterplot(){
         y_axis_high_label.attr("font-size", 14);
         var z_label;
         if (dimensions > 1){
-            z_label = r.text(280, 475, "Radius is " + results.classifiers[1][0]);
+            z_label = r.text(110, 460, "Radius is " + results.classifiers[1][0]);
+            z_label.attr("font-size", 13);
         }
     };
 }
